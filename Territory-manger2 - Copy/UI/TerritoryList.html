@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+         body{
+                margin: 0;
+                background-color: rgb(23, 38, 43);
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            }
+        .tool-tab{
+            float: right;
+            background-color: rgb(39, 68, 75);
+            width: 100%;
+            padding: 5px 5px;
+        }
+        header h1{
+            color: rgb(212, 246, 255);
+            
+        }
+        
+        .tool-btn:hover{
+            width: 40px;
+            height: 40px;
+            margin-left: 15px;
+            transform: rotate(360deg);
+        }
+        
+        .tool-btn{
+            width: 40px;
+            height: 40px;
+            margin-left: 15px;
+            transition: transform 2s;
+        }
+        .tool-container{
+            float: left;
+            margin-left: 16%;
+        }
+        .time{
+            float: right;
+            height:5px;
+            margin: 5px 30px;
+            color: rgb(212, 246, 255);
+        }
+
+        .view-popup {
+          height: 680px;
+          width:60%;
+          background-color:rgb(62, 79, 83);
+          
+          
+        margin: 70px auto;
+        position: relative;
+        transition: all 5s ease-in-out;
+      }
+
+      .view-header{
+        padding: 10px 30px;
+        background-color: rgb(89, 115, 121);
+      }
+      
+      .view-popup h2 {
+        margin-top: 0;
+        color: #333;
+        font-family: Tahoma, Arial, sans-serif;
+      }
+
+      .photo-container{
+        margin:5px 5px;
+        height: 80%;
+        width: 60%;
+        display: inline-block;
+        border: 5px 5px solid white;
+        background-color: rgb(39, 68, 75);
+        vertical-align: top;
+      }
+      .info-container{
+        height:30%;
+        width: 37%;
+        display: inline-block;
+        border: 5px 5px solid white;
+        vertical-align: top;
+      }
+
+      .info-container h1{
+        color: rgb(140, 198, 211); 
+      }
+
+      .info-container h2{
+        color: rgb(226, 250, 255); 
+      }
+
+   </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="eel.js"></script>
+    <script src="Components/NavBar.js" type="text/javascript" defer></script>
+    <script src="Components/ListBox.js" type="text/javascript" defer></script>
+    <script src="Components/TerritoryCard.js" type="text/javascript" defer></script>
+    <script src="Components/Popup.js" type="text/javascript" defer></script>
+    <script>
+        function callHello(){
+            eel.hello();
+        }
+        eel.expose(refreash);
+        function refreash(){
+            location.reload();
+        }
+
+        
+    </script>
+
+    <title>Document</title>
+    
+</head>
+<body>
+    <alert-msg></alert-msg>
+    <div class = 'tool-tab'>
+        <div class="tool-container">
+            <img onclick= "eel.saveData()" class="tool-btn" src="images/icons/save-icon.png">
+            <img class="tool-btn" src="images/icons/refresh-icon.png">
+            <img class="tool-btn" src="images/icons/add-card-icon.png">
+            <img class="tool-btn" src="images/icons/trash-bin-icon.png">
+            
+        </div>
+        <h2 id='current-time' class="time"></h2>
+    </div>
+    
+    <nav-bar></nav-bar>
+    <div class="page-content">
+        <header>
+            <h1>Territory List</h1>
+        </header>
+
+        <div id="list-container">
+            
+        </div>
+        
+    </div>
+</body>
+
+<script>
+    let time = document.getElementById('current-time');
+
+    setInterval(() =>{
+        let d = new Date();
+        time.innerHTML = d.toLocaleTimeString();
+    },1000);
+
+    function getData(){
+        eel.getData();
+    }
+
+    function deleteCard(tid){
+        eel.deleteRow(tid);
+        getData();
+    }
+
+    eel.expose(showData);
+    function showData(data){
+        document.getElementById('list-container').innerHTML = "<list-box content='"+ data +"' title='Territory List'></list-box>";
+    }
+    getData();
+</script>
+</html>
